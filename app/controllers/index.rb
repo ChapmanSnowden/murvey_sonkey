@@ -3,15 +3,9 @@ get '/' do
 end
 
 get '/user' do
-  @taken_surveys = []
-  @all_votes = Vote.where(user_id: current_user.id)
-  @all_votes.each do |t|
-    @taken_surveys << Survey.find(t.survey_id)
-  end
-  @taken_surveys
+  @taken_surveys = find_taken_surveys(session[:user_id])
   @created_surveys = current_user.surveys
-  @all_surveys = Survey.all
-  @untaken_surveys = (@all_surveys - @taken_surveys)
+  @untaken_surveys = find_untaken_surveys(session[:user_id])
   erb :profile
 end
 

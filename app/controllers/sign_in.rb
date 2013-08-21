@@ -4,11 +4,7 @@ end
 
 post '/login' do
   user = User.authenticate(params[:name], params[:password])
-  if user
-    session[:user_id] = user.id
-  else
-    session[:user_id] = nil
-  end
+  session[:user_id] = user.id if user
   redirect '/'
 end
 
@@ -16,14 +12,13 @@ post '/sign_up' do
   user = User.new(name: params[:name], email: params[:email])
   user.password = params[:password]
 
-
   user.save
-  # THIS NEEDS TO BE FIXED SO THE USER IS ONLY LOGGED IN IF THE VALIDATIONS PASS
-  session[:user_id] = user.id
+ 
+  session[:user_id] = user.id if user.id
   redirect '/'
 end
 
 get '/logout' do
-  session[:user_id] = nil
+  session.clear
   redirect '/'
 end
