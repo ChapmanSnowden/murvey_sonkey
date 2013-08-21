@@ -11,28 +11,32 @@ end
 
 # ------- Creator of Survey ------
 
-get '/survey/new'do
+post '/survey/new'do
   @survey = Survey.create(title: params[:title], user_id: session[:user_id] )
-  session[:survey_object] = @survey
-  # display new survey form
+# => Removed session[:survey_object] = @survey
+  session[:survey_id] = @survey.id # added this
   erb :create_survey
 end
 
+
 #submit info for new survey
 post '/survey' do
-  @survey = session[:survey_object]
+  # @survey = Survey.create(title: params[:title], user_id: session[:user_id] )
+  @question = Question.create(survey_id: @survey.id, prompt: params[:prompt])
+  
+  @survey = session[:survey_id]
   @choices =[]
   @choices.push (params[:choice1])
   @choices.push (params[:choice2])
   @choices.push (params[:choice3])
   @choices.push (params[:choice4])
-  @question = Question.create(survey_id: @survey.id, prompt: params[:prompt])
+  
 
   @choices.each do |choice|
     Choice.create(question_id: @question.id, option: choice)
   end
-
-  erb :_survey_components, :layout => false
+  erb :create_survey
+  # erb :_survey_components, :layout => false
 end
 
 # ------- Taker of Survey ------
