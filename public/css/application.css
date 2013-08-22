@@ -2,13 +2,18 @@
   margin: 20px auto;
   width: 600px;
   padding: 0px 20px 20px 20px;
+
 }
 th {
   text-align: left;
 }
 
+.row {
+ 	opacity: .2px;
+}
 
 body{
-background-color:#B89470
-;
+	background-image:url('/monkey-6.jpg');
+	background-repeat: no-repeat;
+	width:100%;
 }
