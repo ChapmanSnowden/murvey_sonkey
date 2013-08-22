@@ -15,7 +15,7 @@
           <li><a href="/survey/results/<%= survey.id %>"><%= survey.title %></a></li>
         <% end %>
       </ul>
-      <form method='get' action="/survey/new">
+      <form method='post' action="/survey/new">
         <button class="btn btn-default">Create a New Survey</button>
         <input  type='text' name='title' placeholder='Enter Survey Title Here'>
       </form>
