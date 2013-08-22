@@ -60,7 +60,8 @@ end
 # -------- Results --------------
 
 get '/survey/results/:id' do
-  @survey = Survey.find(params[:id])
-  @questions = Question.where(survey_id: @survey.id)
+  @survey = Survey.find_by_id(params[:id])
+  @questions = @survey.questions  
+
   erb :results
 end
